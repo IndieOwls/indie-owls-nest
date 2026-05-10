@@ -1,0 +1,46 @@
+{
+  "name": "indie-owls",
+  "version": "0.0.0",
+  "description": "Monorepo — NestJS API + React SPA boilerplate",
+  "author": "Indie Owls Creative Studio <admin@indieowls.com>",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,cyan \"pnpm dev:server\" \"pnpm dev:client\"",
+    "build": "pnpm build:client && pnpm build:admin && pnpm build:server",
+    "start:prod": "pnpm --filter @indie-owls/api start:prod",
+    "generate": "pnpm --filter @indie-owls/codegen generate",
+    "-------- SERVER SCRIPTS --------": "",
+    "dev:server": "pnpm --filter @indie-owls/api start:dev",
+    "build:server": "pnpm --filter @indie-owls/api build",
+    "-------- CLIENT SCRIPTS --------": "",
+    "dev:client": "pnpm --filter @indie-owls/web dev",
+    "build:client": "pnpm --filter @indie-owls/web build",
+    "-------- ADMIN SCRIPTS --------": "",
+    "dev:admin": "pnpm --filter @indie-owls/admin dev",
+    "build:admin": "pnpm --filter @indie-owls/admin build",
+    "-------- TESTING SCRIPTS --------": "",
+    "test": "pnpm --filter @indie-owls/api test",
+    "test:e2e": "pnpm --filter @indie-owls/api test:e2e",
+    "-------- DATABASE SCRIPTS --------": "",
+    "db:generate": "pnpm --filter @indie-owls/api db:generate",
+    "db:migrate": "pnpm --filter @indie-owls/api db:migrate",
+    "db:push": "pnpm --filter @indie-owls/api db:push",
+    "db:studio": "pnpm --filter @indie-owls/api db:studio",
+    "db:seed": "pnpm --filter @indie-owls/api db:seed",
+    "-------- UTILITY SCRIPTS --------": "",
+    "lint": "eslint \"{apps,packages}/**/*.{ts,tsx}\" --fix",
+    "format": "prettier --write \"{apps,packages}/**/*.{ts,tsx}\"",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0",
+    "eslint": "^9.18.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.4.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js}": "eslint --cache --fix"
+  }
+}

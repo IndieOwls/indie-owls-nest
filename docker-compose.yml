@@ -1,0 +1,67 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: indie-pg
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-indie}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-indie}
+      POSTGRES_DB: ${POSTGRES_DB:-indie}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-indie} -d ${POSTGRES_DB:-indie}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: indie-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: indie-api
+    restart: unless-stopped
+    ports:
+      - "${API_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      APP_URL: ${APP_URL:-http://localhost:3000}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${POSTGRES_USER:-indie}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-indie}
+      DATABASE_NAME: ${POSTGRES_DB:-indie}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      COOKIE_NAME: ${COOKIE_NAME:-session_token}
+      SESSION_DURATION_DAYS: ${SESSION_DURATION_DAYS:-7}
+      EMAIL_FROM: ${EMAIL_FROM:-noreply@example.com}
+      STORAGE_DRIVER: local
+      STORAGE_LOCAL_PATH: /app/data/uploads
+    volumes:
+      - uploads:/app/data/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+volumes:
+  pgdata:
+  uploads:

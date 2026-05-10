@@ -1,0 +1,7 @@
+export { StorageService } from './interfaces/storage-service.interface'
+export { LocalStorageService } from './providers/local-storage.service'
+export { S3StorageService } from './providers/s3-storage.service'
+export { ImageService } from './image.service'
+export { FilesService } from './files.service'
+export { FilesModule } from './files.module'
+export { File } from './entities/file.entity'

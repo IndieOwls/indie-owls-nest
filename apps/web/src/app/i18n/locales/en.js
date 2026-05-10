@@ -1,0 +1,1 @@
+/*eslint-disable*/module.exports={messages:JSON.parse("{\"7p5kLi\":[\"Dashboard\"],\"VNG_QI\":[\"Welcome to your dashboard.\"],\"bHYIks\":[\"Sign Out\"]}")};

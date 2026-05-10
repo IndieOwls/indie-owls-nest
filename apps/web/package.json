@@ -1,0 +1,37 @@
+{
+  "name": "@indie-owls/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "i18n:extract": "lingui extract",
+    "i18n:generate-ud": "node scripts/generate-ud-locale.mjs",
+    "i18n": "lingui extract && node scripts/generate-ud-locale.mjs"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.13.0",
+    "@lingui/core": "^6.0.1",
+    "@lingui/react": "^6.0.1",
+    "@reduxjs/toolkit": "^2.11.2",
+    "date-fns": "^4.1.0",
+    "graphql": "^16.10.0",
+    "normalize.css": "^8.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.6.0",
+    "styled-components": "^6.4.1"
+  },
+  "devDependencies": {
+    "@lingui/cli": "^6.0.1",
+    "@lingui/vite-plugin": "^6.0.1",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/styled-components": "^5.1.36",
+    "@vitejs/plugin-react": "^4.4.1",
+    "typescript": "^5.7.3",
+    "vite": "^6.3.5"
+  }
+}

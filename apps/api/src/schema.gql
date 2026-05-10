@@ -1,0 +1,446 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AccessBan {
+  bannedBy: String!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  reason: String
+  reasonType: String!
+  type: String!
+  updatedAt: DateTime!
+  userId: Int!
+}
+
+type AppNewsArticle {
+  authorId: Int!
+  content: String!
+  createdAt: DateTime!
+  deletedAt: DateTime
+  id: Int!
+  isPublished: Boolean!
+  publishedAt: DateTime!
+  sourceUrl: String
+  title: String!
+  updatedAt: DateTime!
+}
+
+type AuditEvent {
+  action: String!
+  actorId: Int
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  ipAddress: String
+  resource: String!
+  resourceId: String
+}
+
+enum ConsentType {
+  ANALYTICS
+  ESSENTIAL
+  FUNCTIONAL
+  MARKETING
+  TEST
+}
+
+input CreateAccessBanInput {
+  bannedBy: String!
+  expiresAt: DateTime
+  reason: String
+  reasonType: String!
+  type: String! = "TEMPORARY"
+  userId: Int!
+}
+
+input CreateAppNewsArticleInput {
+  authorId: Int
+  content: String!
+  isPublished: Boolean! = false
+  sourceUrl: String
+  title: String!
+}
+
+input CreateDataRequestInput {
+  type: DataRequestType!
+  userEmail: String
+  userId: Int
+}
+
+input CreateFeatureFlagInput {
+  allowedRoles: [String!]
+  description: String
+  enabled: Boolean!
+  name: String!
+  special: String
+}
+
+input CreateNotificationInput {
+  message: String!
+  referenceId: Int
+  referenceType: String
+  title: String
+  type: NotificationType!
+  userId: Int!
+}
+
+input CreateOrganizationInput {
+  name: String!
+  slug: String
+}
+
+input CreateUserConsentInput {
+  consentType: ConsentType!
+  granted: Boolean! = true
+  userId: Int!
+}
+
+input CreateUserInput {
+  altEmail: String
+  displayName: String
+  email: String!
+  username: String!
+}
+
+type DataRequest {
+  createdAt: DateTime!
+  id: Int!
+  status: String!
+  type: String!
+  updatedAt: DateTime!
+  userEmail: String
+  userId: Int
+}
+
+enum DataRequestStatus {
+  COMPLETED
+  FAILED
+  IN_PROGRESS
+  PENDING
+}
+
+enum DataRequestType {
+  ACCESS
+  DELETION
+  PORTABILITY
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type EntityPiiGroup {
+  description: String!
+  entity: String!
+  fields: [PiiFieldValue!]!
+}
+
+type FeatureFlag {
+  allowedRoles: [String!]!
+  createdAt: DateTime!
+  description: String
+  enabled: Boolean!
+  id: Int!
+  name: String!
+  special: String
+  updatedAt: DateTime!
+}
+
+type File {
+  createdAt: DateTime!
+  folder: String!
+  height: Int
+  id: ID!
+  key: String!
+  mimeType: String!
+  organizationId: Int
+  originalName: String!
+  size: Int!
+  userId: Int!
+  width: Int
+}
+
+"""Arbitrary JSON value"""
+scalar JSON
+
+type Meta {
+  featureFlags: [FeatureFlag!]!
+  organizations: [Organization!]!
+  serverTime: Float!
+  unreadNotifications: Int!
+  user: User
+}
+
+type Mutation {
+  confirmUpload(folder: String!, key: String!, mimeType: String!, organizationId: Int, originalName: String!, size: Int!): File!
+  createAccessBan(createAccessBanInput: CreateAccessBanInput!): AccessBan!
+  createAppNewsArticle(createAppNewsArticleInput: CreateAppNewsArticleInput!): AppNewsArticle!
+  createBillingPortalSession(returnUrl: String!): String
+  createDataRequest(input: CreateDataRequestInput!): DataRequest!
+  createFeatureFlag(createFeatureFlagInput: CreateFeatureFlagInput!): FeatureFlag!
+  createNotification(createNotificationInput: CreateNotificationInput!): Notification!
+  createOrganization(input: CreateOrganizationInput!): Organization!
+  createUser(createUserInput: CreateUserInput!): User!
+  createUserConsent(createUserConsentInput: CreateUserConsentInput!): UserConsent!
+  deleteDataRequest(id: ID!): Boolean!
+  deleteFile(id: ID!): Boolean!
+  deleteOrganization(id: ID!): Boolean!
+  fulfillDataRequest(id: ID!): PiiReport!
+  recordUsage(metric: String!, organizationId: Int!, value: Int): UsageRecord!
+  removeAccessBan(userId: Int!): AccessBan!
+  removeAppNewsArticle(id: Int!): AppNewsArticle!
+  removeFeatureFlag(id: Int!): FeatureFlag!
+  removeNotification(id: Int!): Notification!
+  removeUser(id: ID!): User!
+  removeUserConsent(id: Int!): UserConsent!
+  requestUploadUrl(folder: String!, mimeType: String!, originalName: String!): UploadUrl!
+  restoreUser(id: ID!): User!
+  updateAccessBan(updateAccessBanInput: UpdateAccessBanInput!, userId: Int!): AccessBan!
+  updateAppNewsArticle(updateAppNewsArticleInput: UpdateAppNewsArticleInput!): AppNewsArticle!
+  updateDataRequest(id: ID!, input: UpdateDataRequestInput!): DataRequest!
+  updateFeatureFlag(updateFeatureFlagInput: UpdateFeatureFlagInput!): FeatureFlag!
+  updateNotification(updateNotificationInput: UpdateNotificationInput!): Notification!
+  updateOrganization(input: UpdateOrganizationInput!): Organization!
+  updatePreferences(preferences: JSON!): UserPreferences!
+  updateUser(input: UpdateUserInput!): User!
+  updateUserConsent(updateUserConsentInput: UpdateUserConsentInput!): UserConsent!
+  uploadFile(base64: String!, folder: String!, mimeType: String!, organizationId: Int, originalName: String!): File!
+}
+
+type Notification {
+  createdAt: DateTime!
+  id: Int!
+  isRead: Boolean!
+  message: String!
+  readAt: DateTime
+  referenceId: Int
+  referenceType: String
+  title: String
+  type: NotificationType!
+  updatedAt: DateTime!
+  userId: Int!
+}
+
+enum NotificationType {
+  MOCK_NOTIFICATION
+  SYSTEM_ALERT
+  TEST_NOTIFICATION
+}
+
+type Organization {
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  slug: String!
+  updatedAt: DateTime!
+}
+
+type OrganizationMember {
+  joinedAt: DateTime!
+  organizationId: Int!
+  role: OrganizationRole!
+  userId: Int!
+}
+
+enum OrganizationRole {
+  ADMIN
+  MEMBER
+  OWNER
+}
+
+enum PiiCategory {
+  EMAIL
+  IDENTIFIER
+  IP_ADDRESS
+  NAME
+  USER_AGENT
+}
+
+type PiiFieldValue {
+  category: PiiCategory!
+  fieldName: String!
+  value: String
+}
+
+type PiiReport {
+  consolidated: [PiiFieldValue!]!
+  records: [EntityPiiGroup!]!
+  userId: Int!
+}
+
+type Query {
+  accessBan(userId: Int!): AccessBan!
+  accessBans: [AccessBan!]!
+  appNewsArticle(id: Int!): AppNewsArticle!
+  appNewsArticles: [AppNewsArticle!]!
+  auditEvents(limit: Int, offset: Int): [AuditEvent!]!
+  auditEventsByResource(resource: String!, resourceId: String!): [AuditEvent!]!
+  dataRequest(id: ID!): DataRequest!
+  dataRequests: [DataRequest!]!
+  featureFlag(id: Int!): FeatureFlag!
+  featureFlags: [FeatureFlag!]!
+  file(id: ID!): File!
+  meta: Meta!
+  myFiles: [File!]!
+  myPreferences: UserPreferences
+  mySubscription: Subscription
+  notification(id: Int!): Notification!
+  notifications: [Notification!]!
+  organization(slug: String!): Organization!
+  organizationMembers(slug: String!): [OrganizationMember!]!
+  organizations: [Organization!]!
+  publishedAppNewsArticles: [AppNewsArticle!]!
+  user(id: ID!): User!
+  userConsent(id: Int!): UserConsent!
+  userConsents: [UserConsent!]!
+  users: [User!]!
+}
+
+type Subscription {
+  createdAt: DateTime!
+  currentPeriodEnd: DateTime!
+  currentPeriodStart: DateTime!
+  id: Int!
+  organizationId: Int!
+  seats: Int!
+  status: SubscriptionStatus!
+  stripeCustomerId: String!
+  stripePriceId: String!
+  stripeSubscriptionId: String!
+  tier: SubscriptionTier!
+  updatedAt: DateTime!
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  EXPIRED
+  INCOMPLETE
+  PAST_DUE
+  TRIALING
+}
+
+enum SubscriptionTier {
+  ENTERPRISE
+  FREE
+  PRO
+}
+
+input UpdateAccessBanInput {
+  bannedBy: String!
+  expiresAt: DateTime
+  reason: String
+  reasonType: String
+  type: String = "TEMPORARY"
+  userId: Int!
+}
+
+input UpdateAppNewsArticleInput {
+  authorId: Int
+  content: String
+  id: Int!
+  isPublished: Boolean = false
+  sourceUrl: String
+  title: String
+}
+
+input UpdateDataRequestInput {
+  id: Int!
+  status: DataRequestStatus
+  type: DataRequestType
+  userEmail: String
+  userId: Int
+}
+
+input UpdateFeatureFlagInput {
+  allowedRoles: [String!]
+  description: String
+  enabled: Boolean
+  id: Int!
+  name: String
+  special: String
+}
+
+input UpdateNotificationInput {
+  id: Int!
+  message: String
+  referenceId: Int
+  referenceType: String
+  title: String
+  type: NotificationType
+  userId: Int
+}
+
+input UpdateOrganizationInput {
+  id: Int!
+  name: String
+  slug: String
+}
+
+input UpdateUserConsentInput {
+  consentType: ConsentType
+  granted: Boolean = true
+  id: Int!
+  userId: Int
+}
+
+input UpdateUserInput {
+  altEmail: String
+  displayName: String
+  email: String
+  id: Int!
+  username: String
+}
+
+type UploadUrl {
+  key: String!
+  url: String!
+}
+
+type UsageRecord {
+  id: Int!
+  metric: String!
+  organizationId: Int!
+  recordedAt: DateTime!
+  value: Int!
+}
+
+type User {
+  altEmail: String
+  completedOnboarding: Boolean!
+  createdAt: DateTime!
+  displayName: String
+  email: String
+  emailVerified: Boolean!
+  id: Int!
+  lastActiveAt: DateTime!
+  role: String!
+  tier: UserTier!
+  updatedAt: DateTime!
+  username: String!
+}
+
+type UserConsent {
+  consentType: ConsentType!
+  granted: Boolean!
+  grantedAt: DateTime!
+  id: Int!
+  revokedAt: DateTime
+  userId: Int!
+}
+
+type UserPreferences {
+  createdAt: DateTime!
+  id: Int!
+  preferences: JSON!
+  updatedAt: DateTime!
+  userId: Int!
+}
+
+enum UserTier {
+  ENTERPRISE
+  FREE
+  PRO
+}
